@@ -20,6 +20,8 @@ public abstract class FrontCommand {
 	
 	public abstract void process() throws ServletException, IOException;
 	
+	public abstract void processPost() throws ServletException, IOException;
+	
 	public void init(ServletContext context, HttpServletRequest request,
 			HttpServletResponse response) {
 		this.context = context;

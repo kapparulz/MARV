@@ -43,7 +43,9 @@ public class FrontServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		FrontCommand command = getCommand(request);
+		command.init(getServletContext(), request, response);
+		command.processPost();
 	}
 
 	private FrontCommand getCommand(HttpServletRequest request) {

@@ -20,4 +20,10 @@ public class UserCommand extends FrontCommand {
 		forward("/user.jsp");
 	}
 
+	@Override
+	public void processPost() throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -12,4 +12,9 @@ public class UnknownCommand extends FrontCommand {
 		forward("/unknown.jsp");
 	}
 
+	@Override
+	public void processPost() throws ServletException, IOException {
+		// Nothing to process
+	}
+
 }

@@ -11,6 +11,9 @@ public abstract class DomainObject {
 	}
 
 	public void setId(long id) {
+		if(id < -1L || id == 0) {
+			throw new IllegalArgumentException("ID cannot be less than -1 or 0.");
+		}
 		this.id = id;
 	}
 	
