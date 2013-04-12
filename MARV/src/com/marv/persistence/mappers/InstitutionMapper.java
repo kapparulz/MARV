@@ -18,6 +18,13 @@ public class InstitutionMapper extends AbstractMapper {
 	}
 
 	@Override
+	protected String findAllStatement() {
+		return "SELECT " + COLUMNS + 
+				" FROM institutions" +
+				" ORDER BY id ASC";
+	}
+
+	@Override
 	protected String updateStatement() {
 		return "UPDATE institutions" +
 				" SET name =?" +

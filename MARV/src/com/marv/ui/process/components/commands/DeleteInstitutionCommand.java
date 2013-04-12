@@ -11,7 +11,6 @@ public class DeleteInstitutionCommand extends FrontCommand {
 	@Override
 	public void process() throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -21,7 +20,7 @@ public class DeleteInstitutionCommand extends FrontCommand {
 			Institution institution = new Institution();
 			institution.setId(id);
 			if(getStorage().delete(institution) > 0) {
-				response.sendRedirect("/");
+				response.sendRedirect(request.getContextPath());
 			} else {
 				response.sendRedirect(request.getHeader("referer"));
 			}

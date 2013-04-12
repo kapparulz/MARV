@@ -14,7 +14,7 @@ import com.marv.util.operationalmanagement.ApplicationException;
 /**
  * Servlet implementation class FrontServlet
  */
-@WebServlet("/FrontServlet")
+@WebServlet("/")
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -58,8 +58,12 @@ public class FrontServlet extends HttpServlet {
 
 	private Class<?> getCommandClass(HttpServletRequest request) {
 		Class<?> result;
+		String command = request.getParameter("command");
+		if(command == null) {
+			command = "Home";
+		}
 		final String commandClassName = "com.marv.ui.process.components.commands."
-				+ (String) request.getParameter("command") + "Command";
+				+ command + "Command";
 		try {
 			result = Class.forName(commandClassName);
 		} catch (ClassNotFoundException e) {
