@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,8 @@ public abstract class AbstractMapper {
 	protected Map<Long, DomainObject> loadedMap = new HashMap<Long, DomainObject>();
 	
 	protected abstract String findStatement();
+	
+	protected abstract String findAllStatement();
 	
 	/**
 	 * Gets a SQL statement modifying a record in the table.
@@ -104,6 +107,23 @@ public abstract class AbstractMapper {
 		}
 	}
 	
+	public ArrayList<DomainObject> findAll() {
+		ArrayList<DomainObject> result = new ArrayList<DomainObject>();
+		PreparedStatement preparedStatement = null;
+		try {
+			preparedStatement = getConnection().prepareStatement(findAllStatement());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				result.add(load(resultSet));
+			}
+		} catch (SQLException e) {
+			throw new ApplicationException(e);
+		} finally {
+			cleanUp(preparedStatement);
+		}
+		return result;
+	}
+	
 	protected DomainObject load(ResultSet rs) throws SQLException {
 		Long id = new Long(rs.getLong(1));
 		if(loadedMap.containsKey(id)) {
@@ -157,7 +177,6 @@ public abstract class AbstractMapper {
 			insertStatement = getConnection().prepareStatement(insertStatement(), Statement.RETURN_GENERATED_KEYS);
 			doInsert(obj, insertStatement);
 			insertStatement.execute();
-			System.out.println(insertStatement.toString());
 			Long lastInsertId = findLastInsertId(insertStatement);
 			doAfterInsert(obj, lastInsertId);
 			obj.setId(lastInsertId);
