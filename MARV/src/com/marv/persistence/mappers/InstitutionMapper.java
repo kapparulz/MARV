@@ -7,10 +7,18 @@ import java.sql.SQLException;
 import com.marv.business.entities.DomainObject;
 import com.marv.business.entities.Institution;
 
+/**
+ * Mapper for Institution domain class. Maps Activity objects to the records in
+ * MySQL tables.
+ */
 public class InstitutionMapper extends AbstractMapper {
 
+	/**
+	 * List of institutions table columns.
+	 */
 	public static final String COLUMNS = "id, name";
 	
+	@Override
 	protected String findStatement() {
 		return "SELECT " + COLUMNS +
 				" FROM institutions" +
@@ -41,14 +49,23 @@ public class InstitutionMapper extends AbstractMapper {
 		return "DELETE FROM institutions WHERE id=?";
 	}
 	
+	/**
+	 * Wrapper method for "public Institution find(long id)" method.
+	 * 
+	 * @param id
+	 *            value of domain object's id field
+	 * @return domain object.
+	 */
 	public Institution find(Long id) {
 		return (Institution) abstractFind(id);
 	}
 	
+	@Override
 	public Institution find(long id) {
 		return (Institution) abstractFind(id);
 	}
 	
+	@Override
 	protected DomainObject doLoad(Long id, ResultSet rs) throws SQLException {
 		Institution institution = new Institution();
 		institution.setId(rs.getLong(1));
