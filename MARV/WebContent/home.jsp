@@ -11,7 +11,6 @@
 <body>
 	<a href="?command=Institution">Add Institution</a>
 	<a href="?command=ListInstitutions">List Institutions</a>
-	<a href="?command=Institution">Add User</a>
-	<a href="?command=ListInstitutions">List Users</a>
+	<a href="?command=User">Add User</a>
 </body>
 </html>

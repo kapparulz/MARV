@@ -1,23 +1,28 @@
 package com.marv.ui.process.components.helpers;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.marv.business.entities.DomainObject;
+import com.marv.business.entities.Institution;
 import com.marv.business.entities.User;
+import com.marv.business.entities.User.UserType;
 
 public class UserHelper implements Serializable{
 
 	private User user;
 	
 	private Map<String, String> errors;
+	private ArrayList<Institution> institutions;	
 	
-	public UserHelper() {
-		this(new User());
+	public UserHelper(ArrayList<Institution> institutions) {
+		this(new User(), institutions);
 	}
 	
-	public UserHelper(User user) {
+	public UserHelper(User user, ArrayList<Institution> institutions) {
+		this.institutions = institutions;
 		this.user = user;
 	}
 	
@@ -48,7 +53,7 @@ public class UserHelper implements Serializable{
 	
 	public void setPassword(String password) {
 		try {
-			user.setUsername(password);
+			user.setPassword(password);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			getErrors().put("password", e.getMessage());
@@ -82,7 +87,7 @@ public class UserHelper implements Serializable{
 	
 	public void setPhone(String phone) {
 		try {
-			user.setUsername(phone);
+			user.setPhone(phone);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
 			getErrors().put("phone", e.getMessage());
@@ -170,5 +175,26 @@ public class UserHelper implements Serializable{
 
 	public DomainObject getUser() {
 		return user;
+	}
+	
+	public ArrayList<Institution> getInstitutions() {
+		return institutions;
+	}
+
+	public void setType(String parameter) {
+		if (parameter.equals("0")) {
+			user.setType(UserType.STUDENT);
+		} else {
+			user.setType(UserType.TUTOR);
+		}
+	}
+
+	public void setInstitutionId(String parameter) {
+		try {
+			user.setInstitutionId(Long.parseLong(parameter));
+		} catch (IllegalArgumentException e) {
+			getErrors().put("institutionsId", e.getMessage());
+		}
+		
 	}
 }
