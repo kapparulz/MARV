@@ -34,7 +34,7 @@ public class InstitutionCommand extends FrontCommand {
 		if(helper.getErrors().isEmpty()) {
 			// Save institution
 			if(getStorage().save(helper.getInstitution())) {
-				response.sendRedirect(request.getContextPath());
+				response.sendRedirect("/");
 				return;
 			}
 		}

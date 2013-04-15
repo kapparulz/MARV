@@ -37,6 +37,12 @@ public class User extends DomainObject {
 
 	public void setUsername(String username) {
 		this.username = username;
+		if(username.length() < 1) {
+			throw new IllegalArgumentException("Username must not be empty.");
+		}
+		if(username.length() > 12) {
+			throw new IllegalArgumentException("Username must not be longer than 12 characters.");
+		}
 	}
 
 	public String getPassword() {
@@ -45,6 +51,12 @@ public class User extends DomainObject {
 
 	public void setPassword(String password) {
 		this.password = password;
+		if(password.length() < 1) {
+			throw new IllegalArgumentException("PW must not be empty.");
+		}
+		if(password.length() > 255) {
+			throw new IllegalArgumentException("PW must not be longer than 255 characters.");
+		}
 	}
 
 	public String getEmail() {
@@ -53,6 +65,9 @@ public class User extends DomainObject {
 
 	public void setEmail(String email) {
 		this.email = email;
+		if(email.length() > 50) {
+			throw new IllegalArgumentException("Email must not be longer than 50 characters.");
+		}
 	}
 
 	public String getPhone() {
@@ -61,6 +76,9 @@ public class User extends DomainObject {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+		if(phone.length() > 12) {
+			throw new IllegalArgumentException("Phone must not be longer than 12 characters.");
+		}
 	}
 
 	public String getAddress() {
@@ -69,6 +87,12 @@ public class User extends DomainObject {
 
 	public void setAddress(String address) {
 		this.address = address;
+		if(address.length() < 1) {
+			throw new IllegalArgumentException("Address must not be empty.");
+		}
+		if(address.length() > 250) {
+			throw new IllegalArgumentException("Address must not be longer than 250 characters.");
+		}
 	}
 
 	public String getFirstName() {
@@ -77,6 +101,12 @@ public class User extends DomainObject {
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+		if(firstName.length() < 1) {
+			throw new IllegalArgumentException("Firstname must not be empty.");
+		}
+		if(firstName.length() > 150) {
+			throw new IllegalArgumentException("Firstname must not be longer than 150 characters.");
+		}
 	}
 
 	public String getLastName() {
@@ -85,6 +115,12 @@ public class User extends DomainObject {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+		if(lastName.length() < 1) {
+			throw new IllegalArgumentException("Lastname must not be empty.");
+		}
+		if(lastName.length() > 150) {
+			throw new IllegalArgumentException("Lastname must not be longer than 150 characters.");
+		}
 	}
 
 	public Institution getInstitution() {

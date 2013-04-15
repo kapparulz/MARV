@@ -16,6 +16,7 @@ public class UserCommand extends FrontCommand {
 //		user.setUsername(request.getParameter("username"));
 		long id = Long.parseLong(request.getParameter("id"));
 		User user = (User) getStorage().find(id, User.class);
+		
 		request.setAttribute("helper", new UserHelper(user));
 		forward("/user.jsp");
 	}
