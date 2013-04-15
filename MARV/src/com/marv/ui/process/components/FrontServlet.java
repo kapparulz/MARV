@@ -32,9 +32,6 @@ public class FrontServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		if(request.getParameter("command") == null) {
-			request.setAttribute("command", "Home");
-		}
 		FrontCommand command = getCommand(request);
 		command.init(getServletContext(), request, response);
 		command.process();
@@ -61,8 +58,12 @@ public class FrontServlet extends HttpServlet {
 
 	private Class<?> getCommandClass(HttpServletRequest request) {
 		Class<?> result;
+		String command = request.getParameter("command");
+		if(command == null) {
+			command = "Home";
+		}
 		final String commandClassName = "com.marv.ui.process.components.commands."
-				+ (String) request.getParameter("command") + "Command";
+				+ command + "Command";
 		try {
 			result = Class.forName(commandClassName);
 		} catch (ClassNotFoundException e) {
