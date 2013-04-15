@@ -21,15 +21,15 @@ public class UserMapper extends AbstractMapper {
 
 	@Override
 	protected String updateStatement() {
-		return "UPDATE users" + " SET username =?, password =?, type =?, email =?, " +
+		return "UPDATE users SET username =?, password =?, type =?, email =?, " +
 				" phone =?, address =?, first_name =?, last_name =?, institution_id =? " +
 				" WHERE id=?";
 	}
 
 	@Override
 	protected String insertStatement() {
-		return "INSERT INTO users (" + COLUMNS + ") " +
-				" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO users (username, password, type, email, phone, address, first_name, last_name," +
+				" institution_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -89,6 +89,7 @@ public class UserMapper extends AbstractMapper {
 	protected void doInsert(DomainObject obj, PreparedStatement s)
 			throws SQLException {
 		User user = (User) obj;
+		System.out.println(user);
 		s.setString(1, user.getUsername());
 		s.setString(2, user.getPassword());
 		if (user.getType() == UserType.TUTOR) {
@@ -101,8 +102,7 @@ public class UserMapper extends AbstractMapper {
 		s.setString(6, user.getAddress());
 		s.setString(7, user.getFirstName());
 		s.setString(8, user.getLastName());
-		
-		//s.setLong(10, user.getId());
+		s.setLong(9, user.getInstitutionId());
 	}
 
 	@Override
@@ -110,5 +110,11 @@ public class UserMapper extends AbstractMapper {
 			throws SQLException {
 		User user = (User) obj;
 		s.setLong(1, user.getId());
+	}
+
+	@Override
+	protected String findAllStatement() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

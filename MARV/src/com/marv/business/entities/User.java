@@ -31,6 +31,8 @@ public class User extends DomainObject {
 	
 	private ArrayList<Bid> bids;
 
+	private long institutionId;
+
 	public String getUsername() {
 		return username;
 	}
@@ -153,5 +155,22 @@ public class User extends DomainObject {
 
 	public void setBids(ArrayList<Bid> bids) {
 		this.bids = bids;
+	}
+
+	public void setInstitutionId(long institutionId) {
+		this.institutionId=institutionId;
+		if(institutionId < -1L || institutionId == 0) {
+			throw new IllegalArgumentException("Institution ID cannot be less than -1 or 0.");
+		}
+	}
+
+	public long getInstitutionId() {
+		return institutionId;
+	}
+	
+	public String toString() {
+		return "[" + address + ", " + email + ", " + firstName + ", "
+				+ institutionId + ", " + lastName + ", " + password + ", "
+				+ phone + ", " + type.toString() + ", " + username + "]";
 	}
 }
