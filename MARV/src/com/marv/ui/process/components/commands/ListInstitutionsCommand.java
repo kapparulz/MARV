@@ -14,7 +14,6 @@ public class ListInstitutionsCommand extends FrontCommand {
 	public void process() throws ServletException, IOException {
 		ArrayList<Institution> institutions = 
 				(ArrayList<Institution>) getStorage().findAll(Institution.class);
-		System.out.println(institutions.size());
 		request.setAttribute("helper", new ListInstitutionsHelper(institutions));
 		forward("/list-institutions.jsp");
 	}
