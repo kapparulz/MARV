@@ -111,4 +111,10 @@ public class UserMapper extends AbstractMapper {
 		User user = (User) obj;
 		s.setLong(1, user.getId());
 	}
+
+	@Override
+	protected String findAllStatement() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -1,5 +1,7 @@
 package com.marv.persistence.core;
 
+import java.util.ArrayList;
+
 import com.marv.business.entities.DomainObject;
 
 public class PersistenceFacade implements Cloneable {
@@ -34,6 +36,10 @@ public class PersistenceFacade implements Cloneable {
 	
 	public Object find(long id, Class<?> domainClassName) {
 		return mapperFactory.getMapper(domainClassName).find(id);
+	}
+	
+	public ArrayList<? extends DomainObject> findAll(Class<?> domainClassName) {
+		return mapperFactory.getMapper(domainClassName).findAll();
 	}
 	
 	/**

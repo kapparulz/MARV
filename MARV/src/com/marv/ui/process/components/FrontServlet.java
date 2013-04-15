@@ -14,7 +14,7 @@ import com.marv.util.operationalmanagement.ApplicationException;
 /**
  * Servlet implementation class FrontServlet
  */
-@WebServlet("/FrontServlet")
+@WebServlet("/")
 public class FrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,6 +32,9 @@ public class FrontServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("command") == null) {
+			request.setAttribute("command", "Home");
+		}
 		FrontCommand command = getCommand(request);
 		command.init(getServletContext(), request, response);
 		command.process();
