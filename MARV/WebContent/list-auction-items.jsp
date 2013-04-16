@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<%@page import="com.marv.ui.process.components.helpers.AuctionItemHelper"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:useBean id="helper"
@@ -15,35 +16,27 @@
 	<table>
 		<caption>Auction Items</caption>
 		<tr>
-			<th>ID</th>
-			<th>Category</th>
-			<th>User</th>
 			<th>Name</th>
 			<th>Description</th>
 			<th>Start Price</th>
 			<th>Buyout Price</th>
 			<th>Start Date</th>
 			<th>End Date</th>
-			<th>Picture</th>
-			<th>Is Sold</th>
 		</tr>
 		<% for(int i = 0; i < helper.getAuctionItems().size(); i++) { %>
 			<tr>
-				<td><%= helper.getAuctionItems().get(i).getId() %></td>
-				<td><%= helper.getAuctionItems().get(i).getCategoryName() %></td>
-				<td><%= helper.getAuctionItems().get(i).getUserName() %></td>
-				<td><%= helper.getAuctionItems().get(i).getName() %></td>
+				<td>
+					<a href="?command=DisplayAuctionItem&id=<%= helper.getAuctionItems().get(i).getId() %>">
+						<%= helper.getAuctionItems().get(i).getName() %>
+					</a>
+				</td>
+				<td><%= helper.getAuctionItems().get(i).getDescription() %></td>
 				<td><%= helper.getAuctionItems().get(i).getStartPrice() %></td>
 				<td><%= helper.getAuctionItems().get(i).getByoutPrice() %></td>
-				<td><%= helper.getAuctionItems().get(i).getStartDate().getTime() %></td>
-				<td><%= helper.getAuctionItems().get(i).getEndDate().getTime() %></td>
-				<td><%= helper.getAuctionItems().get(i).isSold() %></td>
-				<td>
-					<a href="?command=AuctionItem&id=<%= helper.getAuctionItems().get(i).getId() %>">Edit</a>
-				</td>
+				<td><%= AuctionItemHelper.formatDate(helper.getAuctionItems().get(i).getStartDate()) %></td>
+				<td><%= AuctionItemHelper.formatDate(helper.getAuctionItems().get(i).getEndDate()) %></td>
 			</tr>
 		<% } %>
 	</table>
-	<a href="?command=AuctionItem">New Auction Item</a>
 </body>
 </html>

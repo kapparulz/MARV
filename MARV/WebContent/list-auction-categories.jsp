@@ -14,6 +14,5 @@
 <body>
 	<h1>Auction Categories</h1>
 	<%= helper.printCategoriesTree() %>
-	<a href="?command=AuctionCategory">New Auction Category</a>
 </body>
 </html>

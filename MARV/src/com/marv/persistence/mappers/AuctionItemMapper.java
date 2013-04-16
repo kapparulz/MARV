@@ -22,8 +22,9 @@ public class AuctionItemMapper extends AbstractMapper {
 	
 	@Override
 	protected String findStatement() {
-		// TODO Auto-generated method stub
-		return null;
+		return "SELECT " + COLUMNS +
+				" FROM auction_items" +
+				" WHERE id =?";
 	}
 
 	@Override
@@ -97,9 +98,8 @@ public class AuctionItemMapper extends AbstractMapper {
 	}
 
 	@Override
-	public DomainObject find(long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public AuctionItem find(long id) {
+		return (AuctionItem) abstractFind(id);
 	}
 
 	public ArrayList<AuctionItem> findAllByCategory(long categoryId) {

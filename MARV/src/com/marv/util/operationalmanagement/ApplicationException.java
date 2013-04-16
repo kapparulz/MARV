@@ -7,10 +7,10 @@ public class ApplicationException extends RuntimeException {
 //		// TODO Auto-generated constructor stub
 //	}
 //
-//	public ApplicationException(String message) {
-//		super(message);
-//		// TODO Auto-generated constructor stub
-//	}
+	public ApplicationException(String message) {
+		super(message);
+		// TODO Auto-generated constructor stub
+	}
 
 	public ApplicationException(Throwable cause) {
 		super(cause);
