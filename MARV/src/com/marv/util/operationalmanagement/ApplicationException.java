@@ -17,9 +17,9 @@ public class ApplicationException extends RuntimeException {
 		// TODO: log exception or display an error page
 	}
 
-//	public ApplicationException(String message, Throwable cause) {
-//		super(message, cause);
-//		// TODO Auto-generated constructor stub
-//	}
+	public ApplicationException(String message, Throwable cause) {
+		super(message, cause);
+		// TODO Auto-generated constructor stub
+	}
 
 }

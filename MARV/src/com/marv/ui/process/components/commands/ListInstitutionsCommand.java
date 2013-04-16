@@ -12,6 +12,7 @@ public class ListInstitutionsCommand extends FrontCommand {
 
 	@Override
 	public void process() throws ServletException, IOException {
+		@SuppressWarnings("unchecked")
 		ArrayList<Institution> institutions = 
 				(ArrayList<Institution>) getStorage().findAll(Institution.class);
 		request.setAttribute("helper", new ListInstitutionsHelper(institutions));

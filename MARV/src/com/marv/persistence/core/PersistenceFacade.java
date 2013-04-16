@@ -2,7 +2,9 @@ package com.marv.persistence.core;
 
 import java.util.ArrayList;
 
+import com.marv.business.entities.AuctionItem;
 import com.marv.business.entities.DomainObject;
+import com.marv.persistence.mappers.AuctionItemMapper;
 
 public class PersistenceFacade implements Cloneable {
 
@@ -78,5 +80,11 @@ public class PersistenceFacade implements Cloneable {
 		} else {
 			return update(obj) > 0;
 		}
+	}
+
+	public ArrayList<AuctionItem> findAllAuctionItemsByCategory(long categoryId) {
+		AuctionItemMapper mapper = 
+				(AuctionItemMapper)mapperFactory.getMapper(AuctionItem.class);
+		return mapper.findAllByCategory(categoryId);
 	}
 }
