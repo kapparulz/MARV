@@ -17,6 +17,8 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import com.marv.business.entities.OpenID;
+import com.marv.business.entities.User;
 import com.marv.ui.process.components.commands.FrontCommand;
 import com.marv.util.operationalmanagement.ApplicationException;
 
@@ -41,32 +43,45 @@ public class SignInCommand extends FrontCommand {
 	public void processPost() throws ServletException, IOException {
 		HttpURLConnection connection = sendAuthenticationRequest();
 		String userData = getUserData(connection);
-		//System.out.println("response:" + userData);
-		String status;
-		String identifier;
-		String providerName;
 		try {
 			JSONParser parser = new JSONParser();
 			JSONObject obj = (JSONObject) parser.parse(userData);
-			status = (String) obj.get("stat");
+			String status = (String) obj.get("stat");
 			if(status.equals("ok")) {
-				JSONObject profile = (JSONObject) obj.get("profile");
-				identifier = (String) profile.get("identifier");
-				providerName = (String) profile.get("providerName");
+				User parsedUser = parseUserData(obj);
+				User user = getStorage().findUserByOpenId(parsedUser.getIdentifier(0));
+				if(user == null) {
+					//if the authenticated user does not exist in the database then create one.
+					getStorage().insertTransaction(parsedUser);
+					user = parsedUser;
+				}
 				HttpSession session = request.getSession(true);
-				session.setAttribute("authenticated.identifier", identifier);
-				//TODO: get more fields
-				//see http://developers.janrain.com/documentation/engage/reference/user-profile-data/
-				System.out.println(identifier);
-				System.out.println(providerName);
-				//TODO: if the authenticated user does not exist in the database
-				// then create one.
+				session.setAttribute("authenticated.user", user);	
 			} else {
 				throw new ApplicationException("Not authenticated!");
 			}
 		} catch (ParseException e) {
 			throw new ApplicationException(e);
 		}
+		//redirect to home page
+		response.sendRedirect(request.getContextPath());
+	}
+
+	private User parseUserData(JSONObject obj) {
+		JSONObject profile = (JSONObject) obj.get("profile");
+		OpenID openId = new OpenID();
+		openId.setIdentifier((String) profile.get("identifier"));
+		openId.setProvider((String) profile.get("providerName"));
+		User user = new User();
+		user.addOpenId(openId);
+		user.setUsername((String) profile.get("displayName"));
+		user.setEmail((String) profile.get("email"));
+		user.setPhone((String) profile.get("phoneNumber"));
+		user.setAddress((String) profile.get("address"));
+		JSONObject name = (JSONObject) profile.get("name");
+		user.setFirstName((String) name.get("givenName"));
+		user.setLastName((String) name.get("familyName"));
+		return user;
 	}
 
 	private String getUserData(HttpURLConnection connection) throws IOException {

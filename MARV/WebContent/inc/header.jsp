@@ -1,4 +1,6 @@
+<%@page import="com.marv.business.entities.User"%>
 <script type="text/javascript">
+	/* Start OpenId authentication script */
 	(function() {
 		if (typeof window.janrain !== 'object')
 			window.janrain = {};
@@ -30,8 +32,15 @@
 		var s = document.getElementsByTagName('script')[0];
 		s.parentNode.insertBefore(e, s);
 	})();
+	/* End OpenId authentication script */
 </script>
-<a class="janrainEngage" href="#">Sign-In</a>
+<% if(session.getAttribute("authenticated.user") != null) { %>
+	<% User user = (User) session.getAttribute("authenticated.user"); %>
+	<%= user.getUsername() %>
+	<a href="?command=SignOut">Sign-Out</a>
+<% } else { %>
+	<a class="janrainEngage" href="#">Sign-In</a>
+<% } %>
 <a href="?command=Institution">Add Institution</a>
 <a href="?command=ListInstitutions">List Institutions</a>
 <a href="?command=User">Add User</a>
