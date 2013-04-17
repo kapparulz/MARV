@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 11, 2013 at 12:25 AM
+-- Generation Time: Apr 17, 2013 at 11:06 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.3.10-1ubuntu3.6
 
@@ -28,11 +28,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `auction_categories` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `parent_id` bigint(20) NOT NULL,
+  `parent_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `parent_id` (`parent_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=8 ;
+
+--
+-- Dumping data for table `auction_categories`
+--
+
+INSERT INTO `auction_categories` (`id`, `parent_id`, `name`) VALUES
+(1, NULL, 'Books'),
+(2, 1, 'Programming'),
+(3, 1, 'Graphical Design'),
+(4, NULL, 'DVDs'),
+(5, 4, 'Lectures'),
+(6, 2, 'Java'),
+(7, 2, 'C++');
 
 -- --------------------------------------------------------
 
@@ -41,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `auction_categories` (
 --
 
 CREATE TABLE IF NOT EXISTS `auction_items` (
-  `id` bigint(20) NOT NULL,
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `auction_category_id` bigint(20) NOT NULL,
   `user_id` bigint(20) NOT NULL,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -55,7 +68,16 @@ CREATE TABLE IF NOT EXISTS `auction_items` (
   PRIMARY KEY (`id`),
   KEY `auction_category_id` (`auction_category_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `auction_items`
+--
+
+INSERT INTO `auction_items` (`id`, `auction_category_id`, `user_id`, `name`, `description`, `start_price`, `byout_price`, `start_date`, `end_date`, `picture`, `is_sold`) VALUES
+(1, 6, 1, 'Building Java Programs', NULL, 100.00, 200.00, '2013-04-16 00:00:00', '2013-04-23 00:00:00', NULL, 0),
+(2, 7, 1, 'C++ Basics', NULL, 300.00, 500.00, '2013-04-16 00:00:00', '2013-04-23 00:00:00', NULL, 0),
+(3, 6, 1, 'Advanced Java', 'Some short description of the Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book Some short description of the book ', 300.00, 500.00, '2013-04-16 00:00:00', '2013-04-30 00:00:00', NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -84,14 +106,17 @@ CREATE TABLE IF NOT EXISTS `institutions` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `institutions`
 --
 
 INSERT INTO `institutions` (`id`, `name`) VALUES
-(1, 'KEA');
+(1, 'KEA 2'),
+(2, 'Test 7'),
+(3, 'test test test'),
+(5, 'avadfaf fdafa');
 
 -- --------------------------------------------------------
 
@@ -147,8 +172,8 @@ ALTER TABLE `auction_categories`
 -- Constraints for table `auction_items`
 --
 ALTER TABLE `auction_items`
-  ADD CONSTRAINT `auction_items_ibfk_3` FOREIGN KEY (`auction_category_id`) REFERENCES `auction_categories` (`id`),
-  ADD CONSTRAINT `auction_items_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `auction_items_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `auction_items_ibfk_3` FOREIGN KEY (`auction_category_id`) REFERENCES `auction_categories` (`id`);
 
 --
 -- Constraints for table `bids`
