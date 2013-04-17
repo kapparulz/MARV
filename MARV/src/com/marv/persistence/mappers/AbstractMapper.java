@@ -1,11 +1,13 @@
 package com.marv.persistence.mappers;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -210,7 +212,7 @@ public abstract class AbstractMapper {
 	 * 
 	 * @return database connection.
 	 */
-	private Connection getConnection() {
+	protected Connection getConnection() {
 		return MysqlConnection.getInstance().getConnection();
 	}
 
@@ -221,7 +223,7 @@ public abstract class AbstractMapper {
 	 * 
 	 * @param statement last executed statement.
 	 */
-	private void cleanUp(PreparedStatement statement) {
+	protected void cleanUp(PreparedStatement statement) {
 		try {
 			if (statement != null) {
 				statement.close();
@@ -301,5 +303,15 @@ public abstract class AbstractMapper {
 			autoIncKeyFromApi = rs.getLong(1);
 		}
 		return autoIncKeyFromApi;
+	}
+	
+	/**
+	 * Converts java.util.Calendar object to java.sql.Date object.
+	 * 
+	 * @param 	calendar to be converted.
+	 * @return	SQL date.
+	 */
+	protected Date calendarToDate(Calendar calendar) {
+		return new Date(calendar.getTime().getTime());
 	}
 }
