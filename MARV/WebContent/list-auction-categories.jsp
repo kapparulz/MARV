@@ -12,6 +12,7 @@
 	<base href="<%= request.getContextPath() %>" />
 </head>
 <body>
+	<%@ include file="inc/header.jsp" %>
 	<h1>Auction Categories</h1>
 	<%= helper.printCategoriesTree() %>
 </body>

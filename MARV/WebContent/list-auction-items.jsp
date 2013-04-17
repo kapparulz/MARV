@@ -13,6 +13,7 @@
 	<base href="<%= request.getContextPath() %>" />
 </head>
 <body>
+	<%@ include file="inc/header.jsp" %>
 	<table>
 		<caption>Auction Items</caption>
 		<tr>
