@@ -27,6 +27,10 @@ public class AuctionItem extends DomainObject {
 	
 	private ArrayList<Bid> bids;
 
+	private long auctionCategoryId;
+
+	private long userId;
+
 	public String getName() {
 		return name;
 	}
@@ -113,5 +117,37 @@ public class AuctionItem extends DomainObject {
 
 	public void setBids(ArrayList<Bid> bids) {
 		this.bids = bids;
+	}
+	
+	public String getCategoryName() {
+		if(auctionCategory != null) {
+			return auctionCategory.getName();
+		} else {
+			return null;
+		}
+	}
+	
+	public String getUserName() {
+		if(user != null) {
+			return user.getUsername();
+		} else {
+			return null;
+		}
+	}
+
+	public void setAuctionCategoryId(long auctionCategoryId) {
+		this.auctionCategoryId = auctionCategoryId;
+	}
+	
+	public long getAuctionCategoryId() {
+		return auctionCategoryId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
+	}
+	
+	public long getUserId() {
+		return userId;
 	}
 }

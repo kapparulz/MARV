@@ -9,9 +9,10 @@
 	<base href="<%= request.getContextPath() %>" />
 </head>
 <body>
+	<%@ include file="inc/header.jsp" %>
 	<a href="?command=Institution">Add Institution</a>
 	<a href="?command=ListInstitutions">List Institutions</a>
 	<a href="?command=User">Add User</a>
-	
+	<a href="?command=ListAuctionCategories">List Auction Categories</a>
 </body>
 </html>
