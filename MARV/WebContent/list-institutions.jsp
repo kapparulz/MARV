@@ -12,6 +12,7 @@
 	<base href="<%= request.getContextPath() %>" />
 </head>
 <body>
+	<%@ include file="inc/header.jsp" %>
 	<table>
 		<caption>Institutions</caption>
 		<tr>

@@ -1,6 +1,8 @@
 package com.marv.ui.process.components;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +18,11 @@ import com.marv.util.operationalmanagement.ApplicationException;
  */
 @WebServlet("/")
 public class FrontServlet extends HttpServlet {
+	
+	private static final String GATEWAYS_PACKAGE = "com.marv.persistence.gateways";
+	
+	private static final String COMMANDS_PACKAGE = "com.marv.ui.process.components.commands";
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -62,8 +69,12 @@ public class FrontServlet extends HttpServlet {
 		if(command == null) {
 			command = "Home";
 		}
-		final String commandClassName = "com.marv.ui.process.components.commands."
-				+ command + "Command";
+		final String commandClassName;
+		if(command.equals("SignIn")) {
+			commandClassName = GATEWAYS_PACKAGE + "." + command + "Command";
+		} else {
+			commandClassName = COMMANDS_PACKAGE + "." + command + "Command";
+		}
 		try {
 			result = Class.forName(commandClassName);
 		} catch (ClassNotFoundException e) {

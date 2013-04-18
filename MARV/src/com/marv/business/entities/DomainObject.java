@@ -2,7 +2,7 @@ package com.marv.business.entities;
 
 public abstract class DomainObject {
 
-	private static final long PLACEHOLDER_ID = -1;
+	protected static final long PLACEHOLDER_ID = -1;
 	
 	private long id = PLACEHOLDER_ID;
 

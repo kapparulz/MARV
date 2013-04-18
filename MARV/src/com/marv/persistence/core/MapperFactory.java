@@ -12,12 +12,25 @@ public class MapperFactory {
 	 * value is the mapper corresponding to the domain class in the key.
 	 */
 	private HashMap<String, AbstractMapper> mappers;
+	
+	private static MapperFactory instance;
 
 	/**
 	 * The default constructor creates an empty map of mappers.
 	 */
-	MapperFactory() {
+	private MapperFactory() {
 		mappers = new HashMap<String, AbstractMapper>();
+	}
+	
+	public static synchronized MapperFactory getInstance() {
+		if(instance == null) {
+			instance = new MapperFactory();
+		}
+		return instance;
+	}
+	
+	public Object clone() throws CloneNotSupportedException {
+		throw new CloneNotSupportedException();
 	}
 
 	/**
@@ -29,7 +42,7 @@ public class MapperFactory {
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
 	 */
-	AbstractMapper getMapper(Class<? extends Object> domainClass) {
+	public AbstractMapper getMapper(Class<? extends Object> domainClass) {
 		String domainClassName = parseClassName(domainClass);
 		if (!mappers.containsKey(domainClassName)) {
 			mappers.put(domainClassName, createMapper(domainClassName));

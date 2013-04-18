@@ -2,21 +2,39 @@ package com.marv.persistence.mappers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
 
 import com.marv.business.entities.DomainObject;
+import com.marv.business.entities.OpenID;
 import com.marv.business.entities.User;
 import com.marv.business.entities.User.UserType;
+import com.marv.util.operationalmanagement.ApplicationException;
 
 public class UserMapper extends AbstractMapper {
 
-	public static final String COLUMNS = "id, username, password, type, email, phone," +
-			" address, first_name, last_name, institution_id";
+	public static final String COLUMNS = "User.id, User.username, User.password," +
+			" User.type, User.email, User.phone, User.address, User.first_name," +
+			" User.last_name, User.institution_id";
 
 	protected String findStatement() {
-		return "SELECT " + COLUMNS + " FROM users" + " WHERE id =?"
-				+ " LEFT JOIN institutions"
-				+ " ON users.institution_id=institutions.id";
+		return "SELECT " + COLUMNS + " FROM users AS User" +
+				" LEFT JOIN institutions AS Institution" +
+					" ON User.institution_id=Institution.id" +
+				" WHERE User.id=?" +
+				" LIMIT 1";
+	}
+	
+	protected String findByOpenIdStatement() {
+		return "SELECT " + COLUMNS + " FROM users AS User" +
+				" LEFT JOIN institutions AS Institution" +
+					" ON User.institution_id=Institution.id" +
+				" LEFT JOIN open_ids AS OpenID" +
+					" ON User.id=OpenID.user_id" +
+				" WHERE OpenID.identifier=?" +
+				" LIMIT 1";
 	}
 
 	@Override
@@ -28,8 +46,9 @@ public class UserMapper extends AbstractMapper {
 
 	@Override
 	protected String insertStatement() {
-		return "INSERT INTO users (username, password, type, email, phone, address, first_name, last_name," +
-				" institution_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+		return "INSERT INTO users (username, password, type, email, phone," +
+					" address, first_name, last_name, institution_id)" +
+				" VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	}
 
 	@Override
@@ -47,21 +66,31 @@ public class UserMapper extends AbstractMapper {
 
 	protected DomainObject doLoad(Long id, ResultSet rs) throws SQLException {
 		User user = new User();
-		user.setId(rs.getLong(1));
-		user.setUsername(rs.getString(2));
-		user.setPassword(rs.getString(3));
-		int type = rs.getInt(4);
+		user.setId(rs.getLong("User.id"));
+		user.setUsername(rs.getString("User.username"));
+		user.setPassword(rs.getString("User.password"));
+		int type = rs.getInt("User.type");
 		if (type == 1) {
 			user.setType(UserType.TUTOR);
 		} else {
 			user.setType(UserType.STUDENT);
 		}
-		user.setEmail(rs.getString(5));
-		user.setPhone(rs.getString(6));
-		user.setAddress(rs.getString(7));
-		user.setFirstName(rs.getString(8));
-		user.setLastName(rs.getString(9));
+		user.setEmail(rs.getString("User.email"));
+		user.setPhone(rs.getString("User.phone"));
+		user.setAddress(rs.getString("User.address"));
+		user.setFirstName(rs.getString("User.first_name"));
+		user.setLastName(rs.getString("User.last_name"));
 		//int institution = rs.getInt(10);
+//		ResultSetMetaData rsmd = rs.getMetaData();
+//		int columnCount = rsmd.getColumnCount();
+//		// The column count starts from 1
+//		for (int i = 1; i < columnCount + 1; i++) {
+//			if(rsmd.getTableName(i).equals("open_ids")) {
+//				if(rsmd.getColumnName(i).equals("identifier")) {
+//					user.addIdentifier(rs.getString(i));
+//				}
+//			}
+//		}
 		return user;
 	}
 
@@ -93,16 +122,34 @@ public class UserMapper extends AbstractMapper {
 		s.setString(1, user.getUsername());
 		s.setString(2, user.getPassword());
 		if (user.getType() == UserType.TUTOR) {
-			s.setInt(3, 1);
+			s.setInt(3, 0);
 		} else {
-			s.setInt(3, 2);
+			s.setInt(3, 1);
 		}
 		s.setString(4, user.getEmail());
 		s.setString(5, user.getPhone());
 		s.setString(6, user.getAddress());
 		s.setString(7, user.getFirstName());
 		s.setString(8, user.getLastName());
-		s.setLong(9, user.getInstitutionId());
+		if (user.getInstitutionId() > 0) {
+			s.setLong(9, user.getInstitutionId());
+		} else {
+			s.setString(9, null);
+		}
+	}
+	
+	@Override
+	public long insert(DomainObject obj) {
+		long userId = super.insert(obj);
+		ArrayList<OpenID> openIds = ((User) obj).getOpenIds();
+		if (openIds != null) {
+			for (int i = 0; i < openIds.size(); i++) {
+				OpenID openId = openIds.get(i);
+				openId.setUserId(userId);
+				getMapper(OpenID.class).insert(openId);
+			}
+		}
+		return userId;
 	}
 
 	@Override
@@ -116,5 +163,23 @@ public class UserMapper extends AbstractMapper {
 	protected String findAllStatement() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public User findByOpenId(String identifier) {
+		PreparedStatement statement = null;
+		try {
+			statement = getConnection().prepareStatement(findByOpenIdStatement());
+			statement.setString(1, identifier);
+			ResultSet rs = statement.executeQuery();
+			if(rs.next()) {
+				return (User) load(rs);
+			} else {
+				return null;
+			}
+		} catch (SQLException e) {
+			throw new ApplicationException(e);
+		} finally {
+			closeStatement(statement);
+		}
 	}
 }
