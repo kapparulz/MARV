@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.marv.business.entities.DomainObject;
+import com.marv.persistence.core.MapperFactory;
 import com.marv.persistence.core.MysqlConnection;
 import com.marv.util.operationalmanagement.ApplicationException;
 
@@ -108,9 +109,9 @@ public abstract class AbstractMapper {
 	 *            id of the domain object that has been just saved.
 	 * @throws DatabaseException
 	 */
-	protected void doAfterInsert(DomainObject obj, long lastInsertId)
-			throws SQLException {
-	}
+//	protected void doAfterInsert(DomainObject obj, long lastInsertId)
+//			throws SQLException {
+//	}
 
 	/**
 	 * Sets DELETE statement parameters.
@@ -153,6 +154,7 @@ public abstract class AbstractMapper {
 		try {
 			findStatement = getConnection().prepareStatement(findStatement());
 			findStatement.setLong(1, id.longValue());
+			System.out.println(findStatement);
 			ResultSet rs = findStatement.executeQuery();
 			rs.next();
 			result = load(rs);
@@ -160,7 +162,7 @@ public abstract class AbstractMapper {
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(findStatement);
+			closeStatement(findStatement);
 		}
 	}
 
@@ -182,7 +184,7 @@ public abstract class AbstractMapper {
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(preparedStatement);
+			closeStatement(preparedStatement);
 		}
 		return result;
 	}
@@ -223,7 +225,7 @@ public abstract class AbstractMapper {
 	 * 
 	 * @param statement last executed statement.
 	 */
-	protected void cleanUp(PreparedStatement statement) {
+	protected void closeStatement(PreparedStatement statement) {
 		try {
 			if (statement != null) {
 				statement.close();
@@ -245,7 +247,7 @@ public abstract class AbstractMapper {
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(statement);
+			closeStatement(statement);
 		}
 	}
 
@@ -257,15 +259,46 @@ public abstract class AbstractMapper {
 			doInsert(obj, insertStatement);
 			insertStatement.execute();
 			Long lastInsertId = findLastInsertId(insertStatement);
-			doAfterInsert(obj, lastInsertId);
+			//doAfterInsert(obj, lastInsertId);
 			obj.setId(lastInsertId);
 			loadedMap.put(lastInsertId, obj);
 			return lastInsertId;
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(insertStatement);
+			closeStatement(insertStatement);
 		}
+	}
+	
+	public long insertTransaction(DomainObject obj) {
+		try {
+			getConnection().setAutoCommit(false);
+			return insert(obj);
+		} catch (SQLException e) {
+			if(getConnection() != null) {
+				try {
+					getConnection().rollback();
+				} catch (SQLException e1) {
+					throw new ApplicationException(e1);
+				}
+			}
+			throw new ApplicationException(e);
+		} catch (ApplicationException ex) {
+			if(getConnection() != null) {
+				try {
+					getConnection().rollback();
+				} catch (SQLException e1) {
+					throw new ApplicationException(ex);
+				}
+			}
+		} finally {
+			try {
+				getConnection().setAutoCommit(true);
+			} catch (SQLException e) {
+				throw new ApplicationException(e);
+			}
+		}
+		return -1L;
 	}
 
 	public int delete(DomainObject obj) {
@@ -282,7 +315,7 @@ public abstract class AbstractMapper {
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(statement);
+			closeStatement(statement);
 		}
 	}
 
@@ -295,7 +328,7 @@ public abstract class AbstractMapper {
 	 * @return id of the last domain object that was saved in the database.
 	 * @throws SQLException
 	 */
-	private long findLastInsertId(PreparedStatement statement)
+	protected long findLastInsertId(PreparedStatement statement)
 			throws SQLException {
 		long autoIncKeyFromApi = -1L;
 		ResultSet rs = statement.getGeneratedKeys();
@@ -313,5 +346,9 @@ public abstract class AbstractMapper {
 	 */
 	protected Date calendarToDate(Calendar calendar) {
 		return new Date(calendar.getTime().getTime());
+	}
+	
+	protected AbstractMapper getMapper(Class<? extends Object> domainClass) {
+		return MapperFactory.getInstance().getMapper(domainClass);
 	}
 }
