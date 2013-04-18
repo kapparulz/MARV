@@ -9,7 +9,11 @@ public class ApplicationException extends RuntimeException {
 //
 	public ApplicationException(String message) {
 		super(message);
+<<<<<<< HEAD
 		printStackTrace();
+=======
+		// TODO Auto-generated constructor stub
+>>>>>>> refs/heads/master
 	}
 
 	public ApplicationException(Throwable cause) {
@@ -19,7 +23,11 @@ public class ApplicationException extends RuntimeException {
 
 	public ApplicationException(String message, Throwable cause) {
 		super(message, cause);
+<<<<<<< HEAD
 		printStackTrace();
+=======
+		// TODO Auto-generated constructor stub
+>>>>>>> refs/heads/master
 	}
 
 }

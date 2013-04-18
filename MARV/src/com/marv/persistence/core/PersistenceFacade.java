@@ -4,9 +4,13 @@ import java.util.ArrayList;
 
 import com.marv.business.entities.AuctionItem;
 import com.marv.business.entities.DomainObject;
+<<<<<<< HEAD
 import com.marv.business.entities.User;
 import com.marv.persistence.mappers.AuctionItemMapper;
 import com.marv.persistence.mappers.UserMapper;
+=======
+import com.marv.persistence.mappers.AuctionItemMapper;
+>>>>>>> refs/heads/master
 
 public class PersistenceFacade implements Cloneable {
 
@@ -93,9 +97,12 @@ public class PersistenceFacade implements Cloneable {
 				(AuctionItemMapper)mapperFactory.getMapper(AuctionItem.class);
 		return mapper.findAllByCategory(categoryId);
 	}
+<<<<<<< HEAD
 
 	public User findUserByOpenId(String identifier) {
 		UserMapper mapper = (UserMapper) mapperFactory.getMapper(User.class);
 		return mapper.findByOpenId(identifier);
 	}
+=======
+>>>>>>> refs/heads/master
 }
