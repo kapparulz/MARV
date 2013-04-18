@@ -122,7 +122,7 @@ public class AuctionItemMapper extends AbstractMapper {
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
-			cleanUp(preparedStatement);
+			closeStatement(preparedStatement);
 		}
 		return result;
 	}

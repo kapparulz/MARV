@@ -9,17 +9,17 @@ public class ApplicationException extends RuntimeException {
 //
 	public ApplicationException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
+		printStackTrace();
 	}
 
 	public ApplicationException(Throwable cause) {
 		super(cause);
-		// TODO: log exception or display an error page
+		printStackTrace();
 	}
 
 	public ApplicationException(String message, Throwable cause) {
 		super(message, cause);
-		// TODO Auto-generated constructor stub
+		printStackTrace();
 	}
 
 }
