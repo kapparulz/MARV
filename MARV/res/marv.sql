@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 17, 2013 at 11:06 AM
+-- Generation Time: Apr 18, 2013 at 12:50 AM
 -- Server version: 5.5.29
 -- PHP Version: 5.3.10-1ubuntu3.6
 
@@ -113,10 +113,37 @@ CREATE TABLE IF NOT EXISTS `institutions` (
 --
 
 INSERT INTO `institutions` (`id`, `name`) VALUES
+
 (1, 'KEA 2'),
 (2, 'Test 7'),
 (3, 'test test test'),
 (5, 'avadfaf fdafa');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `open_ids`
+--
+
+CREATE TABLE IF NOT EXISTS `open_ids` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `identifier` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `provider` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `open_ids`
+--
+
+INSERT INTO `open_ids` (`id`, `user_id`, `identifier`, `provider`) VALUES
+(1, 1, '33', 'facebook'),
+(2, 1, '35', 'linkedin'),
+(3, 6, 'https://www.google.com/profiles/103380916811781997162', 'Google');
+
 
 -- --------------------------------------------------------
 
@@ -138,25 +165,28 @@ CREATE TABLE IF NOT EXISTS `rooms` (
 
 CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` tinyint(2) NOT NULL,
+  `username` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type` tinyint(2) NOT NULL DEFAULT '0',
   `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `phone` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
   `address` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `first_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `last_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `institution_id` bigint(20) NOT NULL,
+  `first_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `institution_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `institution_id` (`institution_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=7 ;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `username`, `password`, `type`, `email`, `phone`, `address`, `first_name`, `last_name`, `institution_id`) VALUES
-(1, 'john', 'pass', 1, NULL, NULL, NULL, 'John', 'Blow', 1);
+(1, 'john', 'pass', 1, NULL, NULL, NULL, 'John', 'Blow', 1),
+(2, 'brown', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'jack', NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'Valerij Bancer', NULL, 2, '', NULL, NULL, 'Valerij', 'Bancer', NULL);
 
 --
 -- Constraints for dumped tables
@@ -181,6 +211,12 @@ ALTER TABLE `auction_items`
 ALTER TABLE `bids`
   ADD CONSTRAINT `bids_ibfk_1` FOREIGN KEY (`auction_item_id`) REFERENCES `auction_items` (`id`),
   ADD CONSTRAINT `bids_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `open_ids`
+--
+ALTER TABLE `open_ids`
+  ADD CONSTRAINT `open_ids_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
 -- Constraints for table `users`
