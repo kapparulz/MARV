@@ -113,7 +113,6 @@ CREATE TABLE IF NOT EXISTS `institutions` (
 --
 
 INSERT INTO `institutions` (`id`, `name`) VALUES
-
 (1, 'KEA 2'),
 (2, 'Test 7'),
 (3, 'test test test'),
@@ -143,7 +142,6 @@ INSERT INTO `open_ids` (`id`, `user_id`, `identifier`, `provider`) VALUES
 (1, 1, '33', 'facebook'),
 (2, 1, '35', 'linkedin'),
 (3, 6, 'https://www.google.com/profiles/103380916811781997162', 'Google');
-
 
 -- --------------------------------------------------------
 

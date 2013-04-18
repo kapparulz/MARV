@@ -225,11 +225,7 @@ public abstract class AbstractMapper {
 	 * 
 	 * @param statement last executed statement.
 	 */
-<<<<<<< HEAD
 	protected void closeStatement(PreparedStatement statement) {
-=======
-	protected void cleanUp(PreparedStatement statement) {
->>>>>>> refs/heads/master
 		try {
 			if (statement != null) {
 				statement.close();
@@ -351,11 +347,8 @@ public abstract class AbstractMapper {
 	protected Date calendarToDate(Calendar calendar) {
 		return new Date(calendar.getTime().getTime());
 	}
-<<<<<<< HEAD
 	
 	protected AbstractMapper getMapper(Class<? extends Object> domainClass) {
 		return MapperFactory.getInstance().getMapper(domainClass);
 	}
-=======
->>>>>>> refs/heads/master
 }
