@@ -2,9 +2,7 @@ package com.marv.persistence.mappers;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.marv.business.entities.DomainObject;
@@ -35,6 +33,13 @@ public class UserMapper extends AbstractMapper {
 					" ON User.id=OpenID.user_id" +
 				" WHERE OpenID.identifier=?" +
 				" LIMIT 1";
+	}
+
+	@Override
+	protected String findAllStatement() {
+		return "SELECT " + COLUMNS + " FROM users AS User" +
+				" LEFT JOIN institutions AS Institution" +
+				" ON User.institution_id=Institution.id";
 	}
 
 	@Override
@@ -157,12 +162,6 @@ public class UserMapper extends AbstractMapper {
 			throws SQLException {
 		User user = (User) obj;
 		s.setLong(1, user.getId());
-	}
-
-	@Override
-	protected String findAllStatement() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public User findByOpenId(String identifier) {

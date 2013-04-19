@@ -34,6 +34,10 @@
 	})();
 	/* End OpenId authentication script */
 </script>
+<a href="?command=Home">Home</a>
+<a href="?command=ListInstitutions">Institutions</a>
+<a href="?command=ListUsers">Users</a>
+<a href="?command=ListAuctionCategories">Auction Categories</a>
 <% if(session.getAttribute("authenticated.user") != null) { %>
 	<% User user = (User) session.getAttribute("authenticated.user"); %>
 	<%= user.getUsername() %>
@@ -41,7 +45,3 @@
 <% } else { %>
 	<a class="janrainEngage" href="#">Sign-In</a>
 <% } %>
-<a href="?command=Institution">Add Institution</a>
-<a href="?command=ListInstitutions">List Institutions</a>
-<a href="?command=User">Add User</a>
-<a href="?command=ListAuctionCategories">List Auction Categories</a>
