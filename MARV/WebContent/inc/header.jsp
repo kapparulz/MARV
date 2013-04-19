@@ -7,7 +7,7 @@
 		if (typeof window.janrain.settings !== 'object')
 			window.janrain.settings = {};
 
-		janrain.settings.tokenUrl = 'http://localhost:8080/MARV/?command=SignIn';
+		janrain.settings.tokenUrl = '<%= getServletContext().getInitParameter("auth-url") %>';
 
 		function isReady() {
 			janrain.ready = true;

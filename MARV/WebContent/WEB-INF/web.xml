@@ -13,4 +13,8 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+	<context-param>
+	    <param-name>auth-url</param-name>
+	    <param-value>http://localhost:8080/MARV/?command=SignIn</param-value>
+	</context-param>
 </web-app>
