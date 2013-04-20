@@ -156,9 +156,11 @@ public abstract class AbstractMapper {
 			findStatement.setLong(1, id.longValue());
 			System.out.println(findStatement);
 			ResultSet rs = findStatement.executeQuery();
-			rs.next();
-			result = load(rs);
-			return result;
+			if(rs.next()) {
+				return load(rs);
+			} else {
+				return null;
+			}
 		} catch (SQLException e) {
 			throw new ApplicationException(e);
 		} finally {
