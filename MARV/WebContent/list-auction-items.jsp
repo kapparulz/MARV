@@ -17,7 +17,7 @@
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
-	<table>
+	<table class="table">
 		<caption>Auction Items</caption>
 		<tr>
 			<th>Name</th>
