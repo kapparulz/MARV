@@ -16,7 +16,7 @@ import com.marv.util.operationalmanagement.ApplicationException;
 /**
  * Servlet implementation class FrontServlet
  */
-@WebServlet("/")
+@WebServlet("/default.jsp")
 public class FrontServlet extends HttpServlet {
 	
 	private static final String GATEWAYS_PACKAGE = "com.marv.persistence.gateways";

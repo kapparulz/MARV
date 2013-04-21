@@ -10,9 +10,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>User</title>
 	<base href="<%= request.getContextPath() %>" />
-	<style>
-		<%@ include file="CSS/style.css" %>
-	</style>
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/style.css" />
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
