@@ -10,11 +10,20 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>List Auction Categories</title>
 	<base href="<%= request.getContextPath() %>" />
-	 <link href="https://raw.github.com/Miai/MARV/master/MARV/WebContent/CSS/style.css" rel="stylesheet" type="text/css">
+	<style>
+		<%@ include file="CSS/style.css" %>
+	</style>
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
 	<h1>Auction Categories</h1>
 	<%= helper.printCategoriesTree() %>
+	
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script>
+		$(window).load(function() {
+		 
+		});
+	</script>
 </body>
 </html>

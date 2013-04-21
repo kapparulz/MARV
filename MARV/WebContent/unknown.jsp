@@ -7,7 +7,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Unknown Command</title>
 	<base href="<%= request.getContextPath() %>" />
-	 <link href="https://raw.github.com/Miai/MARV/master/MARV/WebContent/CSS/style.css" rel="stylesheet" type="text/css">
+	<<style>
+		<%@ include file="CSS/style.css" %>
+	</style>
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
