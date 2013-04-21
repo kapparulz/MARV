@@ -10,6 +10,10 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Institution</title>
 	<base href="<%= request.getContextPath() %>" />
+		<!--<style>
+		<%@ include file="CSS/style.css" %>
+	</style> -->
+	 <link href="http://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
