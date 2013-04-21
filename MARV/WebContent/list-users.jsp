@@ -10,25 +10,27 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>List Users</title>
 	<base href="<%= request.getContextPath() %>" />
+	<link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/CSS/style.css" />
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
-	<table>
+	<table class="table table-striped table-hover">
 		<caption>Users</caption>
 		<tr>
 			<th>ID</th>
 			<th>Name</th>
+			<th>Actions</th>
 		</tr>
 		<% for(int i = 0; i < helper.getUsers().size(); i++) { %>
 			<tr>
 				<td><%= helper.getUsers().get(i).getId() %></td>
 				<td><%= helper.getUsers().get(i).getUsername() %></td>
 				<td>
-					<a href="?command=User&id=<%= helper.getUsers().get(i).getId() %>">Edit</a>
+					<a class="btn btn-primary btn-small" href="?command=User&id=<%= helper.getUsers().get(i).getId() %>">Edit</a>
 				</td>
 			</tr>
 		<% } %>
 	</table>
-	<a href="?command=User">New User</a>
+	<a class="btn btn-primary" href="?command=User">New User</a>
 </body>
 </html>
