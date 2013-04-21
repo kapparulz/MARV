@@ -11,9 +11,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>List Auction Items</title>
 	<base href="<%= request.getContextPath() %>" />
-		<!--<style>
-		<%@ include file="CSS/style.css" %>
-	</style> -->
 	 <link href="https://raw.github.com/Miai/MARV/master/MARV/WebContent/CSS/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
