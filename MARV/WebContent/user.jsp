@@ -13,7 +13,7 @@
 	<!--<style>
 		<%@ include file="CSS/style.css" %>
 	</style> -->
-	 <link href="http://bootswatch.com/cosmo/bootstrap.css" rel="stylesheet" type="text/css">
+	 <link href="https://raw.github.com/Miai/MARV/master/MARV/WebContent/CSS/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<%@ include file="inc/header.jsp" %>
