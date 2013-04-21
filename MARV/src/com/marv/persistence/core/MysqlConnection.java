@@ -30,7 +30,7 @@ public class MysqlConnection {
 	/**
 	 * The user's password.
 	 */
-	private static final String DB_PASSWORD = "";
+	private static final String DB_PASSWORD = "admin";
 	
 	/**
 	 * Instance of the MysqlConnection object.
