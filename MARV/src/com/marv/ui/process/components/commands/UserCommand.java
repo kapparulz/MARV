@@ -50,7 +50,6 @@ public class UserCommand extends FrontCommand {
 		helper.setInstitutionId(request.getParameter("institutions"));
 		
 		if(helper.getErrors().isEmpty()) {
-			// Save institution
 			if(getStorage().save(helper.getUser())) {
 				response.sendRedirect(request.getContextPath());
 				return;

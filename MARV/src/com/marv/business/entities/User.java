@@ -37,6 +37,7 @@ public class User extends DomainObject {
 	
 	public User() {
 		type = UserType.STUDENT;
+		openIds = new ArrayList<OpenID>(6);
 	}
 
 	public String getUsername() {
@@ -195,9 +196,6 @@ public class User extends DomainObject {
 	}
 
 	public void addOpenId(OpenID openId) {
-		if(openIds == null) {
-			openIds = new ArrayList<OpenID>(6);
-		}
 		openIds.add(openId);
 	}
 
