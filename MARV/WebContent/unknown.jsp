@@ -12,23 +12,14 @@
 	<link rel="stylesheet" type="text/css" href="CSS/style2.css" />
 </head>
 <body>
-	<%@ include file="inc/header.jsp" %>
-	<%@ include file="inc/aboveheader.jsp" %>
-
-	
-	
+	<%@ include file="inc/header.jsp"%>
+	<%@ include file="inc/aboveheader.jsp"%>
 	<div class="content">
-	
-	<%@ include file="inc/sidebar.jsp" %>
-	
-	<div class="mainbar">
-	
-	<h1>Unknown Command</h1>
-	
+		<%@ include file="inc/sidebar.jsp"%>
+		<div class="mainbar">
+			<h1>Unknown Command</h1>
+		</div>
 	</div>
-	</div>
-	
-	
-	<%@ include file="inc/scripts.jsp" %>
+	<%@ include file="inc/scripts.jsp"%>
 </body>
 </html>
