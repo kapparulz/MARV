@@ -19,6 +19,10 @@ public class InstitutionCommand extends FrontCommand {
 			long id = Long.parseLong(idStr);
 			if(id > 0) {
 				institution = (Institution) getStorage().find(id, Institution.class);
+				if(institution == null) {
+					forward("/missing-record.jsp");
+					return;
+				}
 			}
 		}
 		request.setAttribute("helper", new InstitutionHelper(institution));
