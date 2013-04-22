@@ -1,4 +1,3 @@
-<%@page import="com.marv.business.entities.User"%>
 <script type="text/javascript">
 	/* Start OpenId authentication script */
 	(function() {
@@ -34,14 +33,3 @@
 	})();
 	/* End OpenId authentication script */
 </script>
-<a href="?command=Home">Home</a>
-<a href="?command=ListInstitutions">Institutions</a>
-<a href="?command=ListUsers">Users</a>
-<a href="?command=ListAuctionCategories">Auction Categories</a>
-<% if(session.getAttribute("authenticated.user") != null) { %>
-	<% User user = (User) session.getAttribute("authenticated.user"); %>
-	<%= user.getUsername() %>
-	<a href="?command=SignOut">Sign-Out</a>
-<% } else { %>
-	<a class="janrainEngage" href="#">Sign-In</a>
-<% } %>
