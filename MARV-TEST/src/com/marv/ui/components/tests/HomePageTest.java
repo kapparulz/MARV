@@ -13,11 +13,6 @@ public class HomePageTest {
 	@Test
     public void testHome() {
         beginAt("/");
-        //clickLink("login");
-        //assertTitleEquals("Login");
-        //setTextField("username", "test");
-       // setTextField("password", "test123");
-        //submit();
         assertTitleEquals("MARV - home");
     }
 	
@@ -28,5 +23,20 @@ public class HomePageTest {
         assertTitleNotEquals("Home");
     }
 	
+	@Test
+	public void testListInstitutionsLink() {
+		beginAt("/?command=Home");
+		assertLinkPresentWithExactText("Institutions");
+		clickLinkWithExactText("Institutions");
+		assertTitleEquals("List Institutions");
+	}
 	
+	@Test
+	public void testSignInLink() {
+		beginAt("/?command=Home");
+		assertLinkPresentWithExactText("Sign-In");
+		clickLinkWithExactText("Sign-In");
+		assertElementPresent("janrainModal");
+        assertTitleEquals("MARV - home");
+	}
 }
