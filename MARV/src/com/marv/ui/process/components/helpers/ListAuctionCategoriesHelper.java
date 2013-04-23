@@ -31,14 +31,17 @@ public class ListAuctionCategoriesHelper {
 	private String printCategoriesTree(ArrayList<AuctionCategory> tree) {
 		String result = "";
 		if (tree != null && tree.size() > 0) {
-			result += "<ul class='categoriesTree'>";
+			result += "<ul class='categoriesTree resultsList'>";
 			for (AuctionCategory category : tree) {
 				result += "<li>";
-				result += "<a href='?command=ListAuctionItems&category="
+				result += "<a class='fancybox' href='#inline' title=''>";
+				result += "<a href='?command=ListAuctionItems&amp;category="
 						+ category.getId() + "'>";
-				result += category.getName();
+				result += "<i class=''></i> "
+						+ category.getName();
 				result += "</a>";
 				result += printCategoriesTree(category.getChildren());
+				result += "</a>";
 				result += "</li>";
 			}
 			result += "</ul>";
